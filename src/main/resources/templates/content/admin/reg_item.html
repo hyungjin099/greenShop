@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/admin_layout}" >
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="row mb-3">
+        <div class="col">
+            <h1>Registration Item</h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            
+            <form class="row g-3" action="/admin/regItem" method="post" enctype="multipart/form-data">
+                <div class="col-12">
+                    <label class="form-label">Category</label>
+                    <select name="cateCode" class="form-select">
+                        <option th:each="category : ${categoryList}" th:value="${category.cateCode}">[[${category.cateName}]]</option>
+                       
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="itemName" class="form-label">Item Name</label>
+                    <input type="text" class="form-control" id="itemName" name="itemName">
+                </div>
+                <div class="col-12">
+                    <label for="itemPrice" class="form-label">Item Price</label>
+                    <input type="text" class="form-control" id="itemPrice" name="itemPrice">
+                </div>
+                <div class="col-12">
+                    <label for="itemIntro" class="form-label">Item Introduce</label>
+                    <textarea class="form-control" id="itemIntro" name="itemIntro" rows="3"></textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Main Image</label>
+                    <input type="file" class="form-control" name="mainImg">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Sub Image</label>
+                    <input type="file" class="form-control" name="subImg" multiple>
+                </div>
+                <div class="offset-9 col-3 d-grid">
+                  <button type="submit" class="btn btn-primary">Registration</button>
+                </div>
+            </form> 
+        </div>
+    </div>
+      
+</th:block>
+</body>
+</html>

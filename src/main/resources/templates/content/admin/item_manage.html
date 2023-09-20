@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/admin_layout}" >
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+<th:block layout:fragment="content">
+<style>
+    .search-table .title-td{
+        background-color: #eff3f7 !important;
+    }
+</style>
+
+<div class="rol">
+    <div class="col">
+        <!-- 제목 영역 -->
+        <div class="row mb-3">
+            <div class="col">
+                <h1>Item Manage</h1>
+                <hr>
+            </div>
+        </div>
+        <!-- 검색 영역 -->
+        <div class="row mb-3">
+            <div class="col">
+                <form action="/admin/itemManage" method="post">
+                    <table class="table .table-bordered align-middle text-center search-table">
+                        <colgroup>
+                            <col width="10%">
+                            <col width="20%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="*">
+                            <col width="15%">
+                        </colgroup>
+                        <tr style="border-top: 1px solid #dee2e6;">
+                            <td class="title-td">카테고리</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col">
+                                        <select class="form-select" name="searchCateCode">
+                                            <option value="">전체</option>
+                                            <option th:selected="${itemSearchVO.searchCateCode == category.cateCode}" th:each="category : ${categoryList}" th:value="${category.cateCode}">[[${category.cateName}]]</option>
+                                        </select>        
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="title-td">상품명</td>
+                            <td colspan="2">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" name="searchItemName" th:value="${itemSearchVO.searchItemName}">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col d-grid">
+                                        <input type="submit" class="btn btn-primary" value="검 색">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title-td">상품상태</td>
+                            <td colspan="2">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-check form-check-inline">                                                              
+                                            <input class="form-check-input" type="checkbox" value="0" name="searchItemStatus" th:checked="${itemSearchVO.searchItemStatus != null and #lists.contains(itemSearchVO.searchItemStatus, 0)}">
+                                            <label class="form-check-label">판매준비</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" value="1" name="searchItemStatus" th:checked="${itemSearchVO.searchItemStatus != null and #lists.contains(itemSearchVO.searchItemStatus, 1)}">
+                                            <label class="form-check-label">판매중</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" value="2" name="searchItemStatus" th:checked="${itemSearchVO.searchItemStatus != null and #lists.contains(itemSearchVO.searchItemStatus, 2)}">
+                                            <label class="form-check-label">매 진</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="title-td">재고</td>
+                            <td colspan="2">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon1">min</span>
+                                            <input type="text" th:value="${itemSearchVO.searchItemStockMin}" name="searchItemStockMin" class="form-control" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon1">max</span>
+                                            <input type="text" th:value="${itemSearchVO.searchItemStockMax}" name="searchItemStockMax" class="form-control" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <!-- 상품 목록 영역 -->
+        <div class="row">
+            <div class="col">
+                <table class="table table-hover table-striped text-center table-list align-middle">
+                    <colgroup>
+                        <col width="7%">
+                        <col width="10%">
+                        <col width="15%">
+                        <col width="10%">
+                        <col width="*">
+                        <col width="30%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td>No</td>
+                            <td>상품코드</td>
+                            <td>상품명</td>
+                            <td>가 격</td>
+                            <td>재 고</td>
+                            <td>상 태</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item, state : ${itemList}">
+                            <td>[[${#lists.size(itemList) - state.index}]]</td>
+                            <td>[[${item.itemCode}]]</td>
+                            <td>[[${item.itemName}]]</td>
+                            <td>[[${#numbers.formatCurrency(item.itemPrice)}]]</td>
+                            <td>
+                                <form action="/admin/updateItemStock" method="post">
+                                    <input type="hidden" name="itemCode" th:value="${item.itemCode}">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <input type="number" class="form-control" name="itemStock" th:value="${item.itemStock}">
+                                        </div>
+                                        <div class="col-5 d-grid">
+                                            <input type="submit" class="btn btn-secondary" value="수 정">
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" th:name="${'itemStatus_' + state.count}" th:checked="${item.itemStatus == 0}" th:onchange="updateItemStatus([[${item.itemCode}]], 0);">
+                                            <label class="form-check-label">판매준비</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" th:name="${'itemStatus_' + state.count}" th:checked="${item.itemStatus == 1}" th:onchange="updateItemStatus([[${item.itemCode}]], 1);">
+                                            <label class="form-check-label">판매중</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" th:name="${'itemStatus_' + state.count}" th:checked="${item.itemStatus == 2}" th:onchange="updateItemStatus([[${item.itemCode}]], 2);">
+                                            <label class="form-check-label">매진</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/admin/item_manage.js"></script>
+</th:block>
+</body>
+</html>
+
+
+
+
+
+
+
+
