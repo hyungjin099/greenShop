@@ -53,7 +53,7 @@ public class MemberController {
 
     //아이디 중복 확인
     @ResponseBody
-    @PostMapping("/checkId")
+    @PostMapping("/checkIdFetch")
     public boolean checkId(String memberId){
         return memberService.checkId(memberId);
     }

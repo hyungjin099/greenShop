@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ItemService {
     //상품 목록 조회
-    public List<ItemVO> selectItemList();
+    public List<ItemVO> selectItemList(ItemVO itemVO);
 
     //상품 상세 조회
     public ItemVO selectItemDetail(String itemCode);

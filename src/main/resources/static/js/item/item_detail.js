@@ -11,7 +11,7 @@ function isLogin(loginInfo, itemCode){
         }
     }
     else{
-        fetch('/cart/insertCart', { //요청경로
+        fetch('/cart/insertCartFetch', { //요청경로
             method: 'POST',
             cache: 'no-cache',
             headers: {

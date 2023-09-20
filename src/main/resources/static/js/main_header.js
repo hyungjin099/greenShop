@@ -55,7 +55,7 @@ function inputInvalidate(tagId, message){
 
 //회원가입 시 아이디 중복 체크
 function checkId(){
-    fetch('/member/checkId', { //요청경로
+    fetch('/member/checkIdFetch', { //요청경로
         method: 'POST',
         cache: 'no-cache',
         headers: {

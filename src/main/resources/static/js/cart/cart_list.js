@@ -74,7 +74,7 @@ function deleteCarts(){
 function updateCartCnt(cartCode, selectedTag, itemPrice){
     const cartCnt = selectedTag.closest('.row').querySelector('input[type="number"]').value;
 
-    fetch('/cart/updateCartCnt', { //요청경로
+    fetch('/cart/updateCartCntFetch', { //요청경로
         method: 'POST',
         cache: 'no-cache',
         headers: {

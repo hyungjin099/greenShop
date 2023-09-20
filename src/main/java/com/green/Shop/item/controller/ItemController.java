@@ -21,9 +21,9 @@ public class ItemController {
 
     //쇼핑몰 메인페이지
     @GetMapping("/main")
-    public String shopMain(Model model){
+    public String shopMain(ItemVO itemVO , Model model){
         //상품 목록
-        List<ItemVO> itemList = itemService.selectItemList();
+        List<ItemVO> itemList = itemService.selectItemList(itemVO);
         model.addAttribute("itemList", itemList);
 
         //메뉴 목록 조회

@@ -21,7 +21,7 @@ public class CartController {
 
     //장바구니에 상품 등록
     @ResponseBody
-    @PostMapping("/insertCart")
+    @PostMapping("/insertCartFetch")
     public int insertCart(CartVO cartVO, HttpSession session){
         //memberId값 세팅
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
@@ -60,7 +60,7 @@ public class CartController {
 
     //장바구니 수량 변경
     @ResponseBody
-    @PostMapping("/updateCartCnt")
+    @PostMapping("/updateCartCntFetch")
     public void updateCartCnt(CartVO cartVO){
         cartService.updateCartCnt(cartVO);
     }

@@ -110,6 +110,7 @@ public class AdminController {
         return "content/admin/update_member_form";
     }
 
+
     //회원 목록 페이지
     @GetMapping("/selectMemberList")
     public String selectMemberList(SubMenuVO subMenuVO){
