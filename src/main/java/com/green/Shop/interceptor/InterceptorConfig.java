@@ -27,6 +27,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/**/**Fetch")
                 .excludePathPatterns("/images/**", "/js/**", "/css/**");
 
+
+
+
         //카테고리 목록 조회 인터셉터 실행 설정
         registry.addInterceptor(categoryInterceptor)
                 .addPathPatterns("/**")
